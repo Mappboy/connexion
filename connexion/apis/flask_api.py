@@ -86,7 +86,8 @@ class FlaskApi(AbstractAPI):
     def _handlers(self):
         # type: () -> InternalHandlers
         if not hasattr(self, '_internal_handlers'):
-            self._internal_handlers = InternalHandlers(self.base_path, self.options)
+            self._internal_handlers = InternalHandlers(self.base_path, self.options, self.client_id, self.client_secret,
+                                                       self.app_name, self.realms)
         return self._internal_handlers
 
     @classmethod
@@ -269,9 +270,14 @@ class InternalHandlers(object):
     Flask handlers for internally registered endpoints.
     """
 
-    def __init__(self, base_path, options):
+    def __init__(self, base_path, options, client_id, client_secret, app_name, realms):
         self.base_path = base_path
         self.options = options
+
+        self.client_id = client_id
+        self.client_secret = client_secret
+        self.app_name = app_name
+        self.realms = realms
 
     def console_ui_home(self):
         """
