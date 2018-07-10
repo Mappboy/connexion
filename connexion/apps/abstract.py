@@ -162,10 +162,10 @@ class AbstractApp(object):
                            debug=self.debug,
                            validator_map=self.validator_map,
                            pythonic_params=pythonic_params,
-                           client_id=None,
-                           client_secret=None,
-                           app_name=None,
-                           realms=None,
+                           client_id=self.client_id,
+                           client_secret=self.client_secret,
+                           app_name=self.app_name,
+                           realms=self.realms,
                            options=api_options.as_dict())
         return api
 
