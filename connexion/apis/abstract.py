@@ -143,6 +143,10 @@ class AbstractAPI(object):
         if auth_all_paths:
             self.add_auth_on_not_found(self.security, self.security_definitions)
 
+        self.client_id = client_id
+        self.client_secret = client_secret
+        self.app_name = app_name
+        self.realms = realms
 
     def _validate_spec(self, spec):
         validate_spec(spec)
