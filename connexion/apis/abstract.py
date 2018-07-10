@@ -41,7 +41,8 @@ class AbstractAPI(object):
     def __init__(self, specification, base_path=None, arguments=None,
                  validate_responses=False, strict_validation=False, resolver=None,
                  auth_all_paths=False, debug=False, resolver_error_handler=None,
-                 validator_map=None, pythonic_params=False, options=None, **old_style_options):
+                 validator_map=None, pythonic_params=False, options=None,
+                 client_id=None, client_secret=None, app_name=None, realms=None,**old_style_options):
         """
         :type specification: pathlib.Path | dict
         :type base_path: str | None
@@ -140,6 +141,11 @@ class AbstractAPI(object):
 
         if auth_all_paths:
             self.add_auth_on_not_found(self.security, self.security_definitions)
+
+        self.client_id = client_id
+        self.client_secret = client_secret
+        self.app_name = app_name
+        self.realms = realms
 
     def _validate_spec(self, spec):
         validate_spec(spec)
