@@ -14,7 +14,8 @@ logger = logging.getLogger('connexion.app')
 class AbstractApp(object):
     def __init__(self, import_name, api_cls, port=None, specification_dir='',
                  host=None, server=None, arguments=None, auth_all_paths=False, debug=False,
-                 validator_map=None, options=None, **old_style_options):
+                 validator_map=None, options=None, client_id=None, client_secret=None, app_name=None, realms=None,
+                 **old_style_options):
         """
         :param import_name: the name of the application package
         :type import_name: str
@@ -68,6 +69,11 @@ class AbstractApp(object):
 
         logger.debug('Setting error handlers')
         self.set_errors_handlers()
+
+        self.client_id = client_id
+        self.client_secret = client_secret
+        self.app_name = app_name
+        self.realms = realms
 
     @abc.abstractmethod
     def create_app(self):
@@ -156,6 +162,10 @@ class AbstractApp(object):
                            debug=self.debug,
                            validator_map=self.validator_map,
                            pythonic_params=pythonic_params,
+                           client_id=None,
+                           client_secret=None,
+                           app_name=None,
+                           realms=None,
                            options=api_options.as_dict())
         return api
 

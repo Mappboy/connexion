@@ -285,7 +285,8 @@ class InternalHandlers(object):
 
         :return:
         """
-        return flask.render_template('index.html', api_url=self.base_path,
+        return flask.render_template('index.html',
+                                     api_url=self.base_path,
                                      client_id=self.client_id,
                                      client_secret=self.client_secret,
                                      app_name=self.app_name,
