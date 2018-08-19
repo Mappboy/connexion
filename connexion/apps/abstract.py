@@ -96,7 +96,7 @@ class AbstractApp(object):
     def add_api(self, specification, base_path=None, arguments=None,
                 auth_all_paths=None, validate_responses=False,
                 strict_validation=False, resolver=Resolver(), resolver_error=None,
-                pythonic_params=False, options=None, **old_style_options):
+                pythonic_params=False, options=None, pass_context_arg_name=None, **old_style_options):
         """
         Adds an API to the application based on a swagger file or API dict
 
@@ -121,6 +121,8 @@ class AbstractApp(object):
         :type pythonic_params: bool
         :param options: New style options dictionary.
         :type options: dict | None
+        :param pass_context_arg_name: Name of argument in handler functions to pass request context to.
+        :type pass_context_arg_name: str | None
         :param old_style_options: Old style options support for backward compatibility. Preference is
                                   what is defined in `options` parameter.
         :type old_style_options: dict
@@ -166,6 +168,7 @@ class AbstractApp(object):
                            client_secret=self.client_secret,
                            app_name=self.app_name,
                            realms=self.realms,
+                           pass_context_arg_name=pass_context_arg_name,
                            options=api_options.as_dict())
         return api
 

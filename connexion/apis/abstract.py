@@ -43,6 +43,7 @@ class AbstractAPI(object):
                  auth_all_paths=False, debug=False, resolver_error_handler=None,
                  validator_map=None, pythonic_params=False, options=None,
                  client_id=None, client_secret=None, app_name=None, realms=None,
+                 pass_context_arg_name=None,
                  **old_style_options):
         """
         :type specification: pathlib.Path | dict
@@ -63,6 +64,9 @@ class AbstractAPI(object):
         :type pythonic_params: bool
         :param options: New style options dictionary.
         :type options: dict | None
+        :param pass_context_arg_name: If not None URL request handling functions with an argument matching this name
+        will be passed the framework's request context.
+        :type pass_context_arg_name: str | None
         :param old_style_options: Old style options support for backward compatibility. Preference is
                                   what is defined in `options` parameter.
         """
@@ -131,6 +135,9 @@ class AbstractAPI(object):
 
         logger.debug('Pythonic params: %s', str(pythonic_params))
         self.pythonic_params = pythonic_params
+
+        logger.debug('pass_context_arg_name: %s', pass_context_arg_name)
+        self.pass_context_arg_name = pass_context_arg_name
 
         if self.options.openapi_spec_available:
             self.add_swagger_json()
@@ -212,7 +219,8 @@ class AbstractAPI(object):
                               strict_validation=self.strict_validation,
                               resolver=self.resolver,
                               pythonic_params=self.pythonic_params,
-                              uri_parser_class=self.options.uri_parser_class)
+                              uri_parser_class=self.options.uri_parser_class,
+                              pass_context_arg_name=self.pass_context_arg_name)
         self._add_operation_internal(method, path, operation)
 
     @abc.abstractmethod
